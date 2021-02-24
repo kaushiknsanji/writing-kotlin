@@ -33,6 +33,14 @@ fun scratchForLambdas() {
     Collections.sort(accounts) { o1, o2 -> o1.accountCreationDate.compareTo(o2.accountCreationDate) }
 
     // Create a Bank
-    val firstBank = Bank(accounts, { addedAccount -> Log.d("LAMBDAS", "On account added: $addedAccount")})
-    val secondBank = Bank(mutableListOf()) { Log.d("LAMBDAS", "On account added: $it")}
+    val firstBank = Bank(
+        accounts,
+        { addedAccount -> Log.d("LAMBDAS", "On account added: $addedAccount") },
+        { removedAccount -> Log.d("LAMBDAS", "On account removed: $removedAccount") },
+    )
+    val secondBank = Bank(
+        mutableListOf(),
+        { Log.d("LAMBDAS", "On account added: $it") },
+        { if (it.balance > 5000L) Log.d("LAMBDAS", "On account removed: $it") }
+    )
 }
